@@ -1,4 +1,4 @@
-project - Network Ninjas 
+CMPE207 project - by Network Ninjas 
 ============
 # Project scope
 - web/mobile applications for picture sharing
