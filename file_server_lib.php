@@ -23,7 +23,7 @@ $notify_script_name = 'notify_from_peer.php';
 
 // TODO: edit your entry to reflect the real path to the receive script
 $peer_list = array(
-  'annie' =>  'http://www.annie.com/',
+  'annie' =>  'http://www.annie-suantak.com/',
   'daniel'=>  'http://www.danielishere.com/', 
   'ken'   =>  'http://www.skctech.net/', 
   'yulin' =>  'http://www.yulinye.com/fileserver/'
