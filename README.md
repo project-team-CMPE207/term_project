@@ -19,3 +19,6 @@ CMPE207 project - by Network Ninjas
 - all servers have the same script names for receving files and update/delete notifications
 - all servers use the same library methods to send files and send update/delete notifications 
 - see comments in file_server_lib.php  for details
+- 
+# Helpful docs & resources for implementation
+- get md5 value of a fiel: [PHP document for md5_file](http://php.net/manual/en/function.md5-file.php)
