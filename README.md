@@ -21,4 +21,4 @@ CMPE207 project - by Network Ninjas
 - see comments in file_server_lib.php  for details
 - 
 # Helpful docs & resources for implementation
-- get md5 value of a fiel: [PHP document for md5_file](http://php.net/manual/en/function.md5-file.php)
+- get md5 value of a file: [PHP document for md5_file](http://php.net/manual/en/function.md5-file.php)
