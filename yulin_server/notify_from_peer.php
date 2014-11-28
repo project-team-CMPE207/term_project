@@ -1,7 +1,8 @@
 <?php 
 
-require("db.php");
-require("/fileserver/file_server_lib.php");
+require_once "file_db.php";
+require_once "utility.php";
+require_once "/fileserver/file_server_lib.php";
 
 // ======================================================================================================
 // Configuration block begins
@@ -23,42 +24,33 @@ $desc     = $_POST['desc'];
 
 // file id check
 if(!$md5_id) {
-  end_with_msg("file's md5 id is missing");
+  Util::end_with_msg("file's md5 id is missing");
 }
 
 // perform task depending on notification type
 if ($action == "update") {
-  db_init();
-  $success = db_update_record($md5_id, $title, $category, $desc);
+  FileDB::init();
+  $success = FileDB::update_record($md5_id, $title, $category, $desc);
   if(!$success) {
-    end_with_msg("update failed");
+    Util::end_with_msg("update failed");
   }
 
-  db_close();
+  FileDB::close();
   echo "Yulin's Server: Updated successfully!";
 
 } elseif ($action == "delete") {
-    db_init();
-    // TODO: add file deletion logic
-    $success = db_delete_record($md5_id);
-    if(!$success) {
-      end_with_msg("deletion failed");
-    }
+  FileDB::init();
+  
+  $success = Util::delete_file_by_id($md5_id) && FileDB::delete_record($md5_id);
+  if(!$success) {
+    Util::end_with_msg("deletion failed");
+  }
 
-    db_close();
-    echo "Yulin's Server: Deleted successfully!";
+  FileDB::close();
+  echo "Yulin's Server: Deleted successfully!";
 
 } else {
-  end_with_msg("Unknown action: ".$action.". The only accepted notification actions are update and delete.");
+  Util::end_with_msg("Unknown action: ".$action.". The only accepted notification actions are update and delete.");
 }
 
-
-// ======================================================================================================
-// Helper functions definition block begins
-// ======================================================================================================
-function end_with_msg($msg){
-  echo "Yulin's Server Error: ".$msg;
-  db_close();
-  die;
-} 
 ?>
