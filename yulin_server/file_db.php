@@ -1,11 +1,9 @@
 <?php
 
 require_once "utility.php";
+require_once "confidentials.php";
 
 class FileDB {
-  private static $dbhost = 'localhost:3306';
-  private static $dbuser = 'admin';
-  private static $dbpass = 'yahoo#Y33Z40G50';
   private static $conn;
 
   public static function init() {
@@ -14,7 +12,7 @@ class FileDB {
     {
       die('Could not connect: ' . mysql_error());
     }
-    mysql_select_db('file_server');
+    mysql_select_db($dbname);
   }
 
   public static function check_duplicate($md5_id) {

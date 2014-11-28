@@ -26,13 +26,16 @@ The guidelines below should be followed by everyone in order to have predictable
   - method for delete notification: notify_delete
 * see comments in file_server_lib.php  for details
 
-## things everyone has to implement by self
+## Things everyone has to implement by self
 The following parts can vary from server to server and need to be implementated individually 
 * any communications that occurs between server and client
 * logic for receiving files from peers (upload_from_peer.php)
 * logic for receiving update/delete notifications from peers (notify_from_peer.php)
 * logic for storing the file on your server(in DB or on FS; directory and filename etc.)
 * logic for keeping track of picture info associated with the files(recommended to keep records in MySQL)
+
+## Directory structure
+The shared files(like file_server_lib.php is in the root directory); you need to create a folder for your part. Remember not to commit any confidentials(like password for your MySQL connection etc) to GitHub.
 
 ## Helpful docs & resources
 * get md5 value of a file: [PHP document for md5_file](http://php.net/manual/en/function.md5-file.php)
