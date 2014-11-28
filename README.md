@@ -6,7 +6,7 @@ CMPE207 project - by Network Ninjas
 * 4 servers communicate with each other to sync pictures (the picuture files themselves and the picutre info)
 
 ## Contract & protocol to follow
-The guidelines below should be followed by everyone in order to have predictable hehavior in server-server communications.
+The guidelines below should be followed by everyone in order to have predictable hehavior in server-server communications. The methods for sending files/notifications are defined in file_server_lib.php; include it in your scripts whenever you need to call them.
 * a picture has 4 properties(for simplicity we call them the 'picture info'):
   - id: derived from md5 value of the picture file. Required
   - title: title of the picture. Required
@@ -31,7 +31,6 @@ The following parts can vary from server to server and need to be implementated 
 * any communications that occurs between server and client
 * logic for receiving files from peers (upload_from_peer.php)
 * logic for receiving update/delete notifications from peers (notify_from_peer.php)
-* logic for storing files on your server
 * logic for storing the file on your server(in DB or on FS; directory and filename etc.)
 * logic for keeping track of picture info associated with the files(recommended to keep records in MySQL)
 
