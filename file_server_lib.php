@@ -46,7 +46,7 @@ $peer_list = array(
  * @return boolean           A boolean indicate if the upload to all peer servers is successful(true for success)
  */
 function send_to_peers($file_path, $md5_id, $title, $category, $desc){
-  $success = true;
+  $success = TRUE;
   foreach($peer_list as $peer_name => $peer_path) {
     if ($peer_name != $server_name) { // avoid send to self
       // get full path of a file on server
@@ -75,7 +75,7 @@ function send_to_peers($file_path, $md5_id, $title, $category, $desc){
  * @return boolean           A boolean indicate if the notification to all peer servers is successful(true for success)
  */
 function notify_update($md5_id, $title, $category, $desc) {
-  $success = true;
+  $success = TRUE;
   foreach($peer_list as $peer_name => $peer_path) {
     if ($peer_name != $server_name) { // avoid send to self
       // construct the array for curl post action
@@ -98,7 +98,7 @@ function notify_update($md5_id, $title, $category, $desc) {
  * @return boolean           A boolean indicate if the notification to all peer servers is successful(true for success)
  */
 function notify_delete($md5_id) {
-  $success = true;
+  $success = TRUE;
   foreach($peer_list as $peer_name => $peer_path) {
     if ($peer_name != $server_name) { // avoid send to self
       // construct the array for curl post action
