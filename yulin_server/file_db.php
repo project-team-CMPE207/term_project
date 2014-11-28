@@ -7,31 +7,88 @@ class FileDB {
   private static $conn;
 
   public static function init() {
-    self::$conn = mysql_connect(self::$dbhost, self::$dbuser, self::$dbpass);
+    self::$conn = mysql_connect($dbhost, $dbuser, $dbpass);
     if(!self::$conn)
     {
-      die('Could not connect: ' . mysql_error());
+      Util::end_with_msg('Could not connect: ' . mysql_error());
     }
     mysql_select_db($dbname);
   }
 
+  public static function get_file_path($md5_id) {
+    // clean user input to avoid sql injection
+    $md5_id = mysqli_escape_string($md5_id);
+
+    $sql = 'SELECT file_path FROM pictures '.
+         'WHERE id = '.$md5_id.';';
+    $record = mysql_query($sql, self::$conn) or Util::end_with_msg('Query failed: ' . mysql_error());
+    $row = mysql_fetch_row($record);
+
+    return $row and $row[0];
+  }
+
   public static function check_duplicate($md5_id) {
-    // TODO: implement
+    // clean user input to avoid sql injection
+    $md5_id = mysqli_escape_string($md5_id);
+
+    $sql = 'SELECT file_path FROM pictures '.
+         'WHERE id = '.$md5_id.';';
+    $record = mysql_query($sql, self::$conn) or Util::end_with_msg('Query failed: ' . mysql_error());
+    $is_duplicate = mysql_num_rows($record)>0;
     return $is_duplicate;
   }
 
   public static function insert_record($file_path, $from, $md5_id, $title, $category, $desc) {
-    // TODO: implement
+    // README: assume duplication check has been done
+    
+    // clean user input to avoid sql injection 
+    $file_path = mysqli_escape_string($file_path);
+    $from = mysqli_escape_string($from);
+    $md5_id = mysqli_escape_string($md5_id);
+    $title = mysqli_escape_string($title);
+    $category = mysqli_escape_string($category);
+    $desc = mysqli_escape_string($desc);
+
+    $sql = 'INSERT INTO pictures '.
+         '(id, file_path, from, title, category, desc) '.
+         'VALUES ( "'.$md5_id.'", "'.$file_path.'", '.$from.', "'.$title.'", "'.$category.'", "'.$desc.'" )';
+    $success = mysql_query($sql, self::$conn);
+
     return $success;
   }
 
   public static function update_record($md5_id, $title, $category, $desc) {
-    // TODO: implement
+    // README: assume duplication check has been done
+    
+    // clean user input to avoid sql injection 
+    $md5_id = mysqli_escape_string($md5_id);
+    $title = mysqli_escape_string($title);
+    $category = mysqli_escape_string($category);
+    $desc = mysqli_escape_string($desc);
+
+    // build the update string; do not update the field if it is not set
+    $set_str_arr = array();
+    if ($title) array_push($set_str_arr, 'title="'.$title.'"');
+    if ($category) array_push($set_str_arr, 'category="'.$category.'"');
+    if ($desc) array_push($set_str_arr, 'desc="'.$desc.'"');
+    $set_str = implode(", ", $set_str_arr);
+
+    $sql = 'UPDATE pictures '.
+         'SET '.$set_str.
+         'WHERE id = '.$md5_id.';';
+    $success = mysql_query($sql, self::$conn);
+
     return $success;
   }
 
   public static function delete_record($md5_id) {
-    // TODO: implement
+    // clean user input to avoid sql injection 
+    $md5_id = mysqli_escape_string($md5_id);
+    
+    $sql = 'DELETE FROM pictures '.
+         'WHERE id = '.$md5_id.';';
+    $success = mysql_query($sql, self::$conn);
+
     return $success;
   }
 

@@ -10,6 +10,8 @@ require_once "/fileserver/file_server_lib.php";
 // Main block begins
 // ======================================================================================================
 
+Util::log("Request received: client upload");
+
 // extract picture information
 $action   = $_POST['action'];
 $from     = $_POST['from'];
@@ -19,12 +21,12 @@ $category = $_POST['category'];
 $desc     = $_POST['desc'];
 
 if ($action != "update" && $action != "delete") {
-  Util::end_with_msg("Unknown action: ".$action.". The only accepted notification actions are update and delete.");
+  Util::end_with_msg("Bad Request: unknown action: ".$action);
 }
 
 // file id check
 if(!$md5_id) {
-  Util::end_with_msg("file's md5 id is missing");
+  Util::end_with_msg("Bad Request: file's md5 id is missing");
 }
 
 // perform task depending on notification type
@@ -33,17 +35,18 @@ FileDB::init();
 if ($action == "update") {
   $success = FileDB::update_record($md5_id, $title, $category, $desc);
   if(!$success) {
-    Util::end_with_msg("update failed");
+    Util::end_with_msg("Server error: file info update failed");
   }
-  echo "Yulin's Server: Updated successfully!";
+  echo "Request processed: file info updated successfully";
+  Util::log("Request processed: file info updated successfully");
 
 } elseif ($action == "delete") {
   $success = Util::delete_file_by_id($md5_id) && FileDB::delete_record($md5_id);
   if(!$success) {
-    Util::end_with_msg("deletion failed");
+    Util::end_with_msg("Server error: file deletion failed");
   }
-  echo "Yulin's Server: Deleted successfully!";
-
+  echo "Request processed: file deleted successfully";
+  Util::log("Request processed: file deleted successfully");
 }
 
 FileDB::close();
