@@ -21,7 +21,7 @@ $allowed_types  = array(
   );
 
 // maxmum upload size
-define("MAXSIZE", 4096);
+define("MAXSIZE", 4096*1000);
 
 // ======================================================================================================
 // Main block begins
@@ -61,7 +61,7 @@ if (FileDB::check_duplicate($md5_id)){
 };
 
 // type and size check
-$type = strtolower(pathinfo($_FILES["file"]["name"],PATHINFO_EXTENSION));
+$type = strtolower(pathinfo($file["name"],PATHINFO_EXTENSION));
 $size = $_FILES['file']['size'];
 if ($size>MAXSIZE) {
   Util::log_and_die("Bad client upload request: file exceed size limit(".MAXSIZE."kb)");
@@ -75,7 +75,7 @@ $ext          = $type;
 $upload_path  = $upload_dir.$md5_id.".".$ext;
 
 // save the uploaded file to filesystem and add record to database
-$success = move_uploaded_file($_FILES["file"]["tmp_name"], $upload_path) && FileDB::insert_record($upload_path, "yulin's client", $md5_id, $title, $category, $desc);
+$success = move_uploaded_file($file["tmp_name"], $upload_path) && FileDB::insert_record($upload_path, $from, $md5_id, $title, $category, $desc);
 if ($success) {
 } else {
   Util::log_and_die("Server error: upload failed");

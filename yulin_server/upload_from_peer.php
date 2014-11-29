@@ -21,7 +21,7 @@ $allowed_types  = array(
   );
 
 // maxmum upload size
-define("MAXSIZE", 4096);
+define("MAXSIZE", 4096*1000);
 
 // ======================================================================================================
 // Main block begins
