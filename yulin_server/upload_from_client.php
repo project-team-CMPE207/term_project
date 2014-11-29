@@ -4,7 +4,7 @@ putenv ("SERVER_NAME=yulin");
 
 require_once "file_db.php";
 require_once "utility.php";
-require_once "/fileserver/file_server_lib.php";
+require_once "file_server_lib.php";
 
 // ======================================================================================================
 // Configuration block begins

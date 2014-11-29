@@ -19,12 +19,6 @@ class Util {
     die($msg);
   }
 
-  public static function delete_file_by_id($md5_id) {
-    // README: assume a connecion has already been created
-    $file_path = FileDB::get_file_path($md5_id);
-    unlink($file_path);
-  }
-
 }
 
 ?>

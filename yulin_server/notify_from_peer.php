@@ -4,7 +4,7 @@ putenv ("SERVER_NAME=yulin");
 
 require_once "file_db.php";
 require_once "utility.php";
-require_once "/fileserver/file_server_lib.php";
+require_once "file_server_lib.php";
 
 // ======================================================================================================
 // Main block begins
@@ -40,7 +40,8 @@ if ($action == "update") {
   Util::log_and_echo("Request processed: file info updated successfully");
 
 } elseif ($action == "delete") {
-  $success = Util::delete_file_by_id($md5_id) && FileDB::delete_record($md5_id);
+  $file_path = FileDB::get_file_path($md5_id);
+  $success = unlink($file_path);
   if(!$success) {
     Util::log_and_die("Server error: file deletion failed");
   }
