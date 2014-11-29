@@ -8,8 +8,7 @@ class FileDB {
 
   public static function init() {
     self::$conn = mysql_connect($dbhost, $dbuser, $dbpass);
-    if(!self::$conn)
-    {
+    if(!self::$conn) {
       Util::log_and_die('Could not connect: ' . mysql_error());
     }
     mysql_select_db($dbname);
@@ -50,8 +49,8 @@ class FileDB {
     $desc = mysqli_escape_string($desc);
 
     $sql = 'INSERT INTO pictures '.
-         '(id, file_path, from, title, category, desc) '.
-         'VALUES ( "'.$md5_id.'", "'.$file_path.'", '.$from.', "'.$title.'", "'.$category.'", "'.$desc.'" )';
+         '(id, file_path, from, title, category, desc, created_at) '.
+         'VALUES ( "'.$md5_id.'", "'.$file_path.'", '.$from.', "'.$title.'", "'.$category.'", "'.$desc.'", now() )';
     $success = mysql_query($sql, self::$conn);
 
     return $success;
