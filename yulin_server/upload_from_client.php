@@ -37,18 +37,18 @@ $desc     = $_POST['desc'];
 
 // check file data
 if(!$file) {
-  Util::end_with_msg("Bad client upload request: no file data");
+  Util::log_and_die("Bad client upload request: no file data");
 }
 
 // check required field
 if(!$file || !$from || !$title) {
-  Util::end_with_msg("Bad client upload request: required fields are missing");
+  Util::log_and_die("Bad client upload request: required fields are missing");
 }
 
 // generate md5 id for uploaded file
 $md5_id = md5_file($file["tmp_name"]);
 if (!$md5_id) {
-  Util::end_with_msg("Server error: can't generate md5 id for uploaded file");
+  Util::log_and_die("Server error: can't generate md5 id for uploaded file");
 }
 
 // initiate db connection
@@ -56,16 +56,16 @@ FileDB::init();
 
 // duplication check
 if (FileDB::check_duplicate($md5_id)){
-  Util::end_with_msg("Bad client upload request: duplicated file for ".$md5_id);
+  Util::log_and_die("Bad client upload request: duplicated file for ".$md5_id);
 };
 
 // type and size check
 $type = strtolower(pathinfo($_FILES["file"]["name"],PATHINFO_EXTENSION));
 $size = $_FILES['file']['size'];
 if ($size>MAXSIZE) {
-  Util::end_with_msg("Bad client upload request: file exceed size limit(".MAXSIZE."kb)");
+  Util::log_and_die("Bad client upload request: file exceed size limit(".MAXSIZE."kb)");
 } elseif (!in_array($type, $allowed_types)) {
-  Util::end_with_msg("Bad client upload request: unacceptable file format");
+  Util::log_and_die("Bad client upload request: unacceptable file format");
 }
 
 // build upload path
@@ -77,12 +77,11 @@ $upload_path  = $upload_dir.$md5_id.".".$ext;
 $success = move_uploaded_file($_FILES["file"]["tmp_name"], $upload_path) && FileDB::insert_record($upload_path, "yulin's client", $md5_id, $title, $category, $desc);
 if ($success) {
 } else {
-  Util::end_with_msg("Server error: upload failed");
+  Util::log_and_die("Server error: upload failed");
 }
 
 FileDB::close();
-echo "Request processed: file uploaded successfully";
-Util::log("Request processed: file uploaded successfully");
+Util::log_and_echo("Request processed: file uploaded successfully");
 
 // send the new file to peer servers
 $success = send_to_peers($upload_path, $md5_id, $title, $category, $desc);

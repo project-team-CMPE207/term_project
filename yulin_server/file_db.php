@@ -10,7 +10,7 @@ class FileDB {
     self::$conn = mysql_connect($dbhost, $dbuser, $dbpass);
     if(!self::$conn)
     {
-      Util::end_with_msg('Could not connect: ' . mysql_error());
+      Util::log_and_die('Could not connect: ' . mysql_error());
     }
     mysql_select_db($dbname);
   }
@@ -21,8 +21,8 @@ class FileDB {
 
     $sql = 'SELECT file_path FROM pictures '.
          'WHERE id = '.$md5_id.';';
-    $record = mysql_query($sql, self::$conn) or Util::end_with_msg('Query failed: ' . mysql_error());
-    $row = mysql_fetch_row($record);
+    $records = mysql_query($sql, self::$conn) or Util::log_and_die('Query failed: ' . mysql_error());
+    $row = mysql_fetch_row($records);
 
     return $row and $row[0];
   }
@@ -33,8 +33,8 @@ class FileDB {
 
     $sql = 'SELECT file_path FROM pictures '.
          'WHERE id = '.$md5_id.';';
-    $record = mysql_query($sql, self::$conn) or Util::end_with_msg('Query failed: ' . mysql_error());
-    $is_duplicate = mysql_num_rows($record)>0;
+    $records = mysql_query($sql, self::$conn) or Util::log_and_die('Query failed: ' . mysql_error());
+    $is_duplicate = mysql_num_rows($records)>0;
     return $is_duplicate;
   }
 
@@ -84,7 +84,7 @@ class FileDB {
   public static function delete_record($md5_id) {
     // clean user input to avoid sql injection 
     $md5_id = mysqli_escape_string($md5_id);
-    
+
     $sql = 'DELETE FROM pictures '.
          'WHERE id = '.$md5_id.';';
     $success = mysql_query($sql, self::$conn);

@@ -2,13 +2,18 @@
 require_once "file_db.php";
 
 class Util {
-  public static function log($info) {
+  public static function log($msg) {
     $log = fopen("file_server_log.txt","a");
-    fwrite($log,date("h:i:sa").": ".$info);
+    fwrite($log,date("h:i:sa").": ".$msg);
     fclose($log);
   }
-  
-  public static function end_with_msg($msg){
+
+  public static function log_and_echo($msg) {
+    self::log($msg);
+    echo $msg;
+  }
+
+  public static function log_and_die($msg){
     FileDB::close();
     self::log($msg);
     die($msg);

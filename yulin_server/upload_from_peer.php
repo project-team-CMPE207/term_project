@@ -38,12 +38,12 @@ $desc     = $_POST['desc'];
 
 // check file data
 if(!$file) {
-  Util::end_with_msg("Bad peer upload request: no file data");
+  Util::log_and_die("Bad peer upload request: no file data");
 }
 
 // check required field
 if(!$file || !$from || !$md5_id || !$title) {
-  Util::end_with_msg("Bad peer upload request: required fields are missing");
+  Util::log_and_die("Bad peer upload request: required fields are missing");
 }
 
 // initiate db connection
@@ -51,16 +51,16 @@ FileDB::init();
 
 // duplication check
 if (FileDB::check_duplicate($md5_id)){
-  Util::end_with_msg("Bad peer upload request: duplicated file for ".$md5_id);
+  Util::log_and_die("Bad peer upload request: duplicated file for ".$md5_id);
 };
 
 // type and size check
 $type = strtolower(pathinfo($_FILES["file"]["name"],PATHINFO_EXTENSION));
 $size = $_FILES['file']['size'];
 if ($size>MAXSIZE) {
-  Util::end_with_msg("Bad client upload request: file exceed size limit(".MAXSIZE."kb)");
+  Util::log_and_die("Bad client upload request: file exceed size limit(".MAXSIZE."kb)");
 } elseif (!in_array($type, $allowed_types)) {
-  Util::end_with_msg("Bad client upload request: unacceptable file format");
+  Util::log_and_die("Bad client upload request: unacceptable file format");
 }
 
 
@@ -73,11 +73,10 @@ $upload_path  = $upload_dir.$md5_id.".".$ext;
 $success = move_uploaded_file($file["tmp_name"], $upload_path) && FileDB::insert_record($upload_path, $from, $md5_id, $title, $category, $desc);
 if ($success) {
 } else {
-  Util::end_with_msg("Server error: upload failed");
+  Util::log_and_die("Server error: upload failed");
 }
 
 FileDB::close();
 
-echo "Request processed: file uploaded successfully";
-Util::log("Request processed: file uploaded successfully");
+Util::log_and_echo("Request processed: file uploaded successfully");
 ?>
