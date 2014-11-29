@@ -4,7 +4,7 @@ require_once "file_db.php";
 class Util {
   public static function log($msg) {
     $log = fopen("file_server_log.txt","a");
-    fwrite($log,date("h:i:sa").": ".$msg);
+    fwrite($log,date("h:i:sa").": ".$msg."\n");
     fclose($log);
   }
 

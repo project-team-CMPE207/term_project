@@ -31,6 +31,7 @@ Util::log("Request received: client upload");
 
 // extract picture information
 $file     = $_FILES['file'];
+$from     = $_POST['from'];
 $title    = $_POST['title'];
 $category = $_POST['category'];
 $desc     = $_POST['desc'];
@@ -41,7 +42,7 @@ if(!$file) {
 }
 
 // check required field
-if(!$file || !$from || !$title) {
+if(!$from || !$title) {
   Util::log_and_die("Bad client upload request: required fields are missing");
 }
 
