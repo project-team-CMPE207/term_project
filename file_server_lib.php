@@ -15,18 +15,24 @@
 // where $your server name$ is 'annie'|'daniel'|'ken'|'yulin' depend on who you are
 $server_name = $_SERVER['SERVER_NAME'];
 
-// By convention, everyone HAS to use this path for script that receive files from peer servers 
-$recv_script_name = 'upload_from_peer.php';
-
-// By convention, everyone HAS to use this path for script that get notifications(like file update and delete) from peer servers 
-$notify_script_name = 'notify_from_peer.php';
-
-// TODO: edit your entry to reflect the real path to the receive script
+// TODO: edit your entry to reflect the real path to the scripts
 $peer_list = array(
-  'annie' =>  'http://www.annie-suantak.com/',
-  'daniel'=>  'http://www.danielishere.com/', 
-  'ken'   =>  'http://www.skctech.net/', 
-  'yulin' =>  'http://www.yulinye.com/fileserver/'
+  'annie' =>  array(
+    'upload_path' => 'http://www.annie-suantak.com/???',
+    'notify_path' => 'http://http://www.annie-suantak.com/???'
+    ),
+  'daniel'=>  array(
+    'upload_path' => 'http://www.danielishere.com/???',
+    'notify_path' => 'http://http://www.danielishere.com/???'
+    ),
+  'ken'   =>  array(
+    'upload_path' => 'http://www.skctech.com/upload_from_peer.php',
+    'notify_path' => 'http://http://www.skctech.com/notify_from_peer.php'
+    ),
+  'yulin' =>  array(
+    'upload_path' => 'http://www.yulinye.com/fileserver/upload_from_peer.php',
+    'notify_path' => 'http://www.yulinye.com/fileserver/notify_from_peer.php'
+    )
   );
 
 // ======================================================================================================
@@ -47,14 +53,14 @@ $peer_list = array(
  */
 function send_to_peers($file_path, $md5_id, $title, $category, $desc){
   $success = TRUE;
-  foreach($peer_list as $peer_name => $peer_path) {
+  foreach($peer_list as $peer_name => $path_arr) {
     if ($peer_name != $server_name) { // avoid send to self
       // get full path of a file on server
       $file_name_with_full_path = realpath($file_path);
       // construct the array for curl post action
-      $post_arr = array('file'=>'@'.$file_name_with_full_path, 'from'=>$server_name, 'md5_id'=>$md5_id, 'title'=>$title, 'category'=> $category, 'desc'=>$desc);
+      $post_arr = array('action'=>'peer_upload', 'file'=>'@'.$file_name_with_full_path, 'from'=>$server_name, 'md5_id'=>$md5_id, 'title'=>$title, 'category'=> $category, 'desc'=>$desc);
       // curl operation
-      $result = curl_post($peer_path.$recv_script_name, $post_arr);
+      $result = curl_post($path_arr['upload_path'], $post_arr);
       // update status
       $success = $success && $result;
     }
@@ -76,12 +82,12 @@ function send_to_peers($file_path, $md5_id, $title, $category, $desc){
  */
 function notify_update($md5_id, $title, $category, $desc) {
   $success = TRUE;
-  foreach($peer_list as $peer_name => $peer_path) {
+  foreach($peer_list as $peer_name => $path_arr) {
     if ($peer_name != $server_name) { // avoid send to self
       // construct the array for curl post action
       $post_arr = array('action'=>'update', 'from'=>$server_name, 'md5_id'=>$md5_id, 'title'=>$title, 'category'=> $category, 'desc'=>$desc);
       // curl operation
-      $result = curl_post($peer_path.$notify_script_name, $post_arr);
+      $result = curl_post($path_arr['notify_path'], $post_arr);
       // update status
       $success = $success && $result;
     }
@@ -99,12 +105,12 @@ function notify_update($md5_id, $title, $category, $desc) {
  */
 function notify_delete($md5_id) {
   $success = TRUE;
-  foreach($peer_list as $peer_name => $peer_path) {
+  foreach($peer_list as $peer_name => $path_arr) {
     if ($peer_name != $server_name) { // avoid send to self
       // construct the array for curl post action
       $post_arr = array('action'=>'delete', 'from'=>$server_name, 'md5_id'=>$md5_id);
       // curl operation
-      $result = curl_post($peer_path.$notify_script_name, $post_arr);
+      $result = curl_post($path_arr['notify_path'], $post_arr);
       // update status
       $success = $success && $result;
     }
