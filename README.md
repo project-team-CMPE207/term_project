@@ -17,9 +17,7 @@ The guidelines below should be followed by everyone in order to have predictable
   - it receives new file from client. In this case it sends the new file together with picture info to other servers
   - file info is updated somehow by it or its client. In this case it notifies and sends picture info to other servers
   - file is deleted somehow by it or its client. In this case it notifies and sends the picture id to other server
-* all servers use the same path for receving files and update/delete notifications
-  - script for receving files: upload_from_peer.php
-  - script for update/delete notifications: notify_from_peer.php
+* servers can use different path to handle requests, but make sure you have updated your server's path information in file_server_lib.php's configuration block 
 * all servers use the same library methods to send files and send update/delete notifications 
   - method for sending files: send_to_peers
   - method for update notification: notify_update
