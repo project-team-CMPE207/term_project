@@ -1,6 +1,6 @@
 <?php 
 // server name
-putenv ("SERVER_NAME=yulin");
+$server_name = "yulin";
 
 require_once "file_db.php";
 require_once "utility.php";

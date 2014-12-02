@@ -9,12 +9,9 @@
 // ======================================================================================================
 
 
-// Read 'SERVER_NAME' from server variable so when sending files it won't send to itself
-// To set 'SERVER_NAME' on your server, in all pages that require this library, add this line in the beginning:
-// putenv ("SERVER_NAME=$your server name$")
-// where $your server name$ is 'annie'|'daniel'|'ken'|'yulin' depend on who you are
-$server_name = $_SERVER['SERVER_NAME'];
-
+// Read the global variable $server_name from server variable so when sending files it won't send to itself
+// where $server_name is 'annie'|'daniel'|'ken'|'yulin' depend on who you are
+global $server_name;
 // TODO: edit your entry to reflect the real path to the scripts
 $peer_list = array(
   // 'annie' =>  array(
@@ -26,8 +23,8 @@ $peer_list = array(
   //   'notify_path' => 'http://http://www.danielishere.com/???'
   //   ),
   'ken'   =>  array(
-    'upload_path' => 'http://www.skctech.com/upload_from_peer.php',
-    'notify_path' => 'http://www.skctech.com/notify_from_peer.php'
+    'upload_path' => 'http://www.skctech.net/PhotoSharing/upload_from_peer.php',
+    'notify_path' => 'http://www.skctech.net/PhotoSharing/notify_from_peer.php'
     ),
   'yulin' =>  array(
     'upload_path' => 'http://www.yulinye.com/fileserver/upload_from_peer.php',
@@ -55,7 +52,7 @@ function send_to_peers($file_path, $md5_id, $title, $category, $desc){
   global $peer_list;
   global $server_name;
 
-  Util::log('Debug: send to peers called');
+  Util::log('Debug: send to peers called. server_name:'.$server_name);
   $success = TRUE;
   foreach($peer_list as $peer_name => $path_arr) {
     Util::log('Debug: start to send to the server ['.$peer_name.']');
