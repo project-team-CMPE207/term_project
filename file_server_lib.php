@@ -17,17 +17,17 @@ $server_name = $_SERVER['SERVER_NAME'];
 
 // TODO: edit your entry to reflect the real path to the scripts
 $peer_list = array(
-  'annie' =>  array(
-    'upload_path' => 'http://www.annie-suantak.com/???',
-    'notify_path' => 'http://http://www.annie-suantak.com/???'
-    ),
-  'daniel'=>  array(
-    'upload_path' => 'http://www.danielishere.com/???',
-    'notify_path' => 'http://http://www.danielishere.com/???'
-    ),
+  // 'annie' =>  array(
+  //   'upload_path' => 'http://www.annie-suantak.com/???',
+  //   'notify_path' => 'http://http://www.annie-suantak.com/???'
+  //   ),
+  // 'daniel'=>  array(
+  //   'upload_path' => 'http://www.danielishere.com/???',
+  //   'notify_path' => 'http://http://www.danielishere.com/???'
+  //   ),
   'ken'   =>  array(
     'upload_path' => 'http://www.skctech.com/upload_from_peer.php',
-    'notify_path' => 'http://http://www.skctech.com/notify_from_peer.php'
+    'notify_path' => 'http://www.skctech.com/notify_from_peer.php'
     ),
   'yulin' =>  array(
     'upload_path' => 'http://www.yulinye.com/fileserver/upload_from_peer.php',
@@ -52,15 +52,23 @@ $peer_list = array(
  * @return boolean           A boolean indicate if the upload to all peer servers is successful(true for success)
  */
 function send_to_peers($file_path, $md5_id, $title, $category, $desc){
+  global $peer_list;
+  global $server_name;
+
+  Util::log('Debug: send to peers called');
   $success = TRUE;
   foreach($peer_list as $peer_name => $path_arr) {
+    Util::log('Debug: start to send to the server ['.$peer_name.']');
+    Util::log('Debug: the path of the destination is ['.$path_arr['upload_path'].']');
     if ($peer_name != $server_name) { // avoid send to self
       // get full path of a file on server
+      Util::log('Debug: passed the test that it is not self');
       $file_name_with_full_path = realpath($file_path);
       // construct the array for curl post action
       $post_arr = array('action'=>'peer_upload', 'file'=>'@'.$file_name_with_full_path, 'from'=>$server_name, 'md5_id'=>$md5_id, 'title'=>$title, 'category'=> $category, 'desc'=>$desc);
       // curl operation
       $result = curl_post($path_arr['upload_path'], $post_arr);
+      Util::log('Debug: result from the cur_post: '.$result);
       // update status
       $success = $success && $result;
     }
@@ -81,6 +89,9 @@ function send_to_peers($file_path, $md5_id, $title, $category, $desc){
  * @return boolean           A boolean indicate if the notification to all peer servers is successful(true for success)
  */
 function notify_update($md5_id, $title, $category, $desc) {
+  global $peer_list;
+  global $server_name;
+
   $success = TRUE;
   foreach($peer_list as $peer_name => $path_arr) {
     if ($peer_name != $server_name) { // avoid send to self
@@ -104,6 +115,9 @@ function notify_update($md5_id, $title, $category, $desc) {
  * @return boolean           A boolean indicate if the notification to all peer servers is successful(true for success)
  */
 function notify_delete($md5_id) {
+  global $peer_list;
+  global $server_name;
+  
   $success = TRUE;
   foreach($peer_list as $peer_name => $path_arr) {
     if ($peer_name != $server_name) { // avoid send to self
@@ -137,7 +151,7 @@ function curl_post($url, $post_arr){
   curl_setopt($ch, CURLOPT_POSTFIELDS, $post_arr);
   $result=curl_exec ($ch);
   curl_close ($ch);
-
+  Util::log('Debug: result from the curl_exec: '.$result);
   return $result;
 }
 
