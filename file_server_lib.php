@@ -14,14 +14,14 @@
 global $server_name;
 // TODO: edit your entry to reflect the real path to the scripts
 $peer_list = array(
-  // 'annie' =>  array(
-  //   'upload_path' => 'http://www.annie-suantak.com/???',
-  //   'notify_path' => 'http://http://www.annie-suantak.com/???'
-  //   ),
-  // 'daniel'=>  array(
-  //   'upload_path' => 'http://www.danielishere.com/???',
-  //   'notify_path' => 'http://http://www.danielishere.com/???'
-  //   ),
+   'annie' =>  array(
+     'upload_path' => 'http://www.annie-suantak.com/upload_from_peer.php',
+     'notify_path' => 'http://www.annie-suantak.com/notify_from_peer.php'
+     ),
+   'daniel'=>  array(
+     'upload_path' => 'http://www.danielishere.com/???',
+     'notify_path' => 'http://www.danielishere.com/???'
+     ),
   'ken'   =>  array(
     'upload_path' => 'http://www.skctech.net/PhotoSharing/upload_from_peer.php',
     'notify_path' => 'http://www.skctech.net/PhotoSharing/notify_from_peer.php'
