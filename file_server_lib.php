@@ -15,8 +15,8 @@ global $server_name;
 // TODO: edit your entry to reflect the real path to the scripts
 $peer_list = array(
    'annie' =>  array(
-     'upload_path' => 'http://www.annie-suantak.com/upload_from_peer.php',
-     'notify_path' => 'http://www.annie-suantak.com/notify_from_peer.php'
+     'upload_path' => 'http://www.annie-suantak.com/clicksville/upload_from_peer.php',
+     'notify_path' => 'http://www.annie-suantak.com/clicksville/notify_from_peer.php'
      ),
    'daniel'=>  array(
      'upload_path' => 'http://www.danielishere.com/upload_from_peer.php',
