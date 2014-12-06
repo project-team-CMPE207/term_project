@@ -19,8 +19,8 @@ $peer_list = array(
      'notify_path' => 'http://www.annie-suantak.com/notify_from_peer.php'
      ),
    'daniel'=>  array(
-     'upload_path' => 'http://www.danielishere.com/???',
-     'notify_path' => 'http://www.danielishere.com/???'
+     'upload_path' => 'http://www.danielishere.com/upload_from_peer.php',
+     'notify_path' => 'http://www.danielishere.com/notify_from_peer.php'
      ),
   'ken'   =>  array(
     'upload_path' => 'http://www.skctech.net/PhotoSharing/upload_from_peer.php',
