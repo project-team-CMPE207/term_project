@@ -14,6 +14,13 @@ class FileDB {
     mysql_select_db($GLOBALS['dbname']);
   }
 
+  public static function get_all_pictures() {
+    $sql = 'SELECT `file_path`, `from`, `title`, `category`, `desc`
+              FROM pictures';
+    $records = mysql_query($sql, self::$conn) or Util::log_and_die('Query failed: ' . mysql_error());
+    return $records;
+  }
+
   public static function get_file_path($md5_id) {
     // clean user input to avoid sql injection
     // $md5_id = mysqli_escape_string($md5_id);
