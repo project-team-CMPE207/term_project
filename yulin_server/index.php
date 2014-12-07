@@ -14,7 +14,7 @@
         <meta name="description" content="Rapid start">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
 
-        <title>Galereya. Rapid start.</title>
+        <title>Picture sharing By Network Ninjas</title>
 
         <link href='http://fonts.googleapis.com/css?family=Scada:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/demo.css">
