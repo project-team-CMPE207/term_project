@@ -15,7 +15,7 @@ public class Main extends Application {
 
             primaryStage.setTitle("Yulin's file client");
             primaryStage.setResizable(false);
-            primaryStage.setScene(new Scene(root, 600, 550));
+            primaryStage.setScene(new Scene(root, 728, 373));
 
             primaryStage.show();
         } catch(Exception e) {

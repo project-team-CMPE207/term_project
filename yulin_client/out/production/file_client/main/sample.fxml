@@ -10,13 +10,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="browseBtn" mnemonicParsing="false" onMouseClicked="#handleClickBrowse" text="Browse">
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets right="50.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="uploadBtn" mnemonicParsing="false" onMouseClicked="#handleClickUpload" text="Upload" />
@@ -24,16 +24,18 @@
       </HBox>
    </bottom>
    <center>
-      <Pane prefHeight="475.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="332.0" prefWidth="722.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER_RIGHT" layoutX="150.0" layoutY="225.0" prefWidth="80.0" text="Title:" />
-            <Label alignment="CENTER_RIGHT" layoutX="150.0" layoutY="265.0" prefWidth="80.0" text="Category:" />
-            <Label alignment="CENTER_RIGHT" layoutX="150.0" layoutY="305.0" prefWidth="80.0" text="Description:" textAlignment="RIGHT" />
-            <TextField fx:id="titleText" layoutX="240.0" layoutY="225.0" prefHeight="25.0" prefWidth="200.0" promptText="Title of the picture" />
-            <TextField fx:id="catText" layoutX="240.0" layoutY="265.0" prefHeight="25.0" prefWidth="200.0" promptText="people, sports etc." />
-            <TextArea fx:id="descText" layoutX="240.0" layoutY="305.0" prefHeight="120.0" prefWidth="200.0" promptText="Say something about the picture" />
-            <ImageView fx:id="previewImg" fitHeight="190.0" fitWidth="300.0" layoutX="142.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="status" layoutX="72.0" layoutY="431.0" prefHeight="57.0" prefWidth="480.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="378.0" layoutY="32.0" prefWidth="80.0" text="Title:" />
+            <Label alignment="CENTER_RIGHT" layoutX="378.0" layoutY="72.0" prefWidth="80.0" text="Category:" />
+            <Label alignment="CENTER_RIGHT" layoutX="378.0" layoutY="112.0" prefWidth="80.0" text="Description:" textAlignment="RIGHT" />
+            <TextField fx:id="titleText" layoutX="468.0" layoutY="32.0" prefHeight="25.0" prefWidth="200.0" promptText="Title of the picture" />
+            <TextField fx:id="catText" layoutX="468.0" layoutY="72.0" prefHeight="25.0" prefWidth="200.0" promptText="people, sports etc." />
+            <TextArea fx:id="descText" layoutX="468.0" layoutY="112.0" prefHeight="120.0" prefWidth="200.0" promptText="Say something about the picture" />
+            <ImageView fx:id="previewImg" fitHeight="190.0" fitWidth="300.0" layoutX="38.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="status" layoutX="36.0" layoutY="247.0" prefHeight="57.0" prefWidth="657.0" />
+            <Separator layoutX="357.0" layoutY="21.0" orientation="VERTICAL" prefHeight="223.0" prefWidth="5.0" />
+            <Label layoutX="162.0" layoutY="32.0" text="Preview" />
          </children>
       </Pane>
    </center>

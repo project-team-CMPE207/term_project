@@ -62,11 +62,11 @@ public class Controller implements Initializable {
     }
 
     public void handleClickUpload() {
+        setStatus("start sending file...");
         System.out.println(titleText.getText());
         System.out.println(catText.getText());
         System.out.println(descText.getText());
 
-        setStatus("start sending file...");
         sendFile(tmpFile, titleText.getText(), catText.getText(), descText.getText());
         clearInputs();
     }
@@ -85,7 +85,7 @@ public class Controller implements Initializable {
             HttpPost httppost = new HttpPost("http://www.yulinye.com/fileserver/upload_from_client.php");
 
             FileBody   bin 		    = new FileBody(file);
-            StringBody from 		= new StringBody("yulin's client", ContentType.TEXT_PLAIN);
+            StringBody from 		= new StringBody("yulin", ContentType.TEXT_PLAIN);
             StringBody title 		= new StringBody(titleP, ContentType.TEXT_PLAIN);
             StringBody category 	= new StringBody(catP, ContentType.TEXT_PLAIN);
             StringBody desc 		= new StringBody(descP, ContentType.TEXT_PLAIN);
